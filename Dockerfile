@@ -16,11 +16,11 @@ RUN apk add -U \
     && make -j10 -C /upx-${UPX_VERSION}-src/src upx.out CHECK_WHITESPACE=
 
 RUN /upx-${UPX_VERSION}-src/src/upx.out \
-    --lzma \
+    -9 \
     -o /usr/local/bin/upx \
     /upx-${UPX_VERSION}-src/src/upx.out
 
 FROM alpine:${OS_VERSION}
 LABEL maintainer wzshiming@foxmail.com
 COPY --from=builder /usr/local/bin/upx /usr/local/bin/upx
-ENTRYPOINT upx
+ENTRYPOINT [ "upx" ]
